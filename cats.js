@@ -90,3 +90,5 @@ const cats = [
     "name": "Mochi"
 }
 ]
+
+module.exports = cats;
