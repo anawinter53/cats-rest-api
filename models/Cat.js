@@ -28,7 +28,7 @@ class Cat {
     static create(newCat) {
         //create newCat in cat controller
         newCat.id = cats.length + 1;
-        cats.push(newCat)
+        cats.push(newCat);
         return new Cat(newCat);
     }
 
@@ -44,13 +44,14 @@ class Cat {
         }
     }
 
-    del(data) {
-        const deletedCat = cats.find(c => c.id === this.id);
-        const index = cats.indexOf(deletedCat)
+    del(index) {
+        const deletedCat = cats.find(c => c.id === index);
+        const idx = cats.indexOf(deletedCat)
+        const idxOf = parseInt(cats[idx])
 
         if(deletedCat) {
-            cats.splice(cats[index], 1)
-            return new Cat()
+            cats.splice(idxOf, 1)
+            return ""
         } else {
             throw "Cat not found"
         }
