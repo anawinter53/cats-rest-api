@@ -2,41 +2,60 @@ const cats = require('../cats');
 
 class Cat {
     constructor(cat) {
+        this.id = cat.id;
         this.breed = cat.breed;
         this.name = cat.name;
     }
 
-    showAll() {
-        console.log('All cats');
-        return cats;
+    static showAll() {
+        return cats.map(c => new Cat(c));
     }
 
-    showRandom() {
-        console.log('One cat here');
-        return cats;
+    static showRandom() {
+        const randInt = Math.floor(Math.random() * cats.length);
+        return new Cat(cats[randInt]);
     }
 
-    showByIndex() {
-        console.log('changed cat here');
-        return cats;
+    static showByIndex(index) {
+        const randCat = cats.find(c => c.id === index);
+        if(randCat) {
+            return new Cat(randCat)
+        } else {
+            throw "Cat not found"
+        };
     }
 
-    create() {
-        console.log('created cat')
-        return cats;
+    static create(newCat) {
+        //create newCat in cat controller
+        newCat.id = cats.length + 1;
+        cats.push(newCat)
+        return new Cat(newCat);
     }
 
     update(data) {
-        console.log('changed cat');
-        return cats
+        const updatedCat = cats.find(c => c.id === this.id);
+
+        if(updatedCat) {
+            updatedCat.breed = data.breed,
+            updatedCat.name = data.name
+            return new Cat (updatedCat)
+        } else {
+            throw "Cat not found"
+        }
     }
 
     del(data) {
-        console.log('deleted cat');
-        return cats
+        const deletedCat = cats.find(c => c.id === this.id);
+
+        if(deletedCat) {
+            map.delete(deletedCat)
+            return new Cat()
+        } else {
+            throw "Cat not found"
+        }
     }   
 
 
 }
 
-module.exports = Cat
+module.exports = Cat;
