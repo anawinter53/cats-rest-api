@@ -35,8 +35,9 @@ async function specific (req, res) {
 
 //connects to create function
 async function create (req, res) {
+    console.log('create works')
     try {
-        const newCat = await Cat.create(req.body);
+        const newCat = await Cat.add(req.body);
         res.status(201).send(newCat)
     } catch {
         res.status(500).send({error: "Cannot create new cat"})
@@ -57,11 +58,11 @@ async function update (req, res) {
 
 //connects to delete function
 async function del (req, res) {
-    const index = parseInt(req.params.id)
+    const id = parseInt(req.params.id)
     try {
-        const deletedCat = await Cat.del(index)
-        const deadCat = JSON.stringify(deletedCat)
-        res.status(200).send(`Your cat ${deadCat} has been deleted`)
+        const deletedCat = await Cat.showByIndex(id)
+        const cat = await deletedCat.destroy()
+        res.status(200).send(`Your cat has been deleted`)
     } catch(err) {
         res.status(500).send({error: "Cat is indestructible"})
     }

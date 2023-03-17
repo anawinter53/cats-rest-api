@@ -25,11 +25,11 @@ class Cat {
         };
     }
 
-    static create(newCat) {
-        //create newCat in cat controller
-        newCat.id = cats.length + 1;
-        cats.push(newCat);
-        return new Cat(newCat);
+    static add(cat) {
+        console.log('add works')
+        cat.id = cats.length + 1;
+        cats.push(cat);
+        return new Cat(cat);
     }
 
     update(data) {
@@ -44,14 +44,11 @@ class Cat {
         }
     }
 
-    del(index) {
-        const deletedCat = cats.find(c => c.id === index);
-        const idx = cats.indexOf(deletedCat)
-        const idxOf = parseInt(cats[idx])
+    destroy() {
+        const newCats = cats.filter(({id}) => id !== this.id);
 
-        if(deletedCat) {
-            cats.splice(idxOf, 1)
-            return ""
+        if(newCats) {
+            return newCats;
         } else {
             throw "Cat not found"
         }
