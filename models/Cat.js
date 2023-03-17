@@ -46,9 +46,10 @@ class Cat {
 
     del(data) {
         const deletedCat = cats.find(c => c.id === this.id);
+        const index = cats.indexOf(deletedCat)
 
         if(deletedCat) {
-            map.delete(deletedCat)
+            cats.splice(cats[index], 1)
             return new Cat()
         } else {
             throw "Cat not found"
