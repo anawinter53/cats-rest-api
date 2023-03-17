@@ -6,11 +6,13 @@ router.get('/', cats.index);
 
 router.get('/random', cats.random);
 
+router.get('/:id', cats.specific)
+
 router.post('/', cats.create);
 
 router.patch('/:id', cats.update);
 
-router.delete('/', cats.del);
+router.delete('/:id', cats.del);
 
 module.exports = router;
 

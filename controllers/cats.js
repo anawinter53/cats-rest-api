@@ -1,28 +1,70 @@
-const Cat = requires('../models/Cat');
+const Cat = require('../models/Cat');
 
 //function connects to show all, show by index functions
 async function index (req, res) {
-    res.send('Index works')
+    try{
+        const cats = await Cat.showAll();
+        res.send(cats)
+    } catch(err) {
+        res.status(500).send({error: "Server error"})
+    }
 }
 
 //connects to show random function
 async function random (req, res) {
-    res.send('Random works')
+    try {
+        const cat = await Cat.showRandom()
+        res.status(200).send(cat)
+    } catch(err) {
+        res.status(500).send({error: "Server error"})
+    }
+}
+
+//connects to show index function
+async function specific (req, res) {
+    const index = parseInt(req.params.id)
+
+    try {
+        const cat = await Cat.showByIndex(index);
+        res.status(200).send(cat)
+    } catch(err) {
+        res.status(404).send({error: "Cat not found"})
+    }
+
 }
 
 //connects to create function
 async function create (req, res) {
-    res.send('Post works')
+    try {
+        const cat = await Cat.create(req.body);
+        res.status(201).send(cat)
+    } catch(err) {
+        res.status(500).send({error: "Cannot create new cat"})
+    }
 }
 
 //connects to update function
 async function update (req, res) {
-    res.send('Update works')
+    const index = parseInt(req.params.id)
+    try {
+        const cat = await Cat.showByIndex(index);
+        const updatedCat = await cat.update(req.body)
+        res.status(200).send(updatedCat)
+    } catch(err) {
+        res.status(500).send({error: "Cannot update cat"})
+    }
 }
 
 //connects to delete function
 async function del (req, res) {
-    res.send('Del works')
+    const index = parseInt(req.params.id)
+    try {
+        const cat = await Cat.showByIndex(index);
+        const deletedCat = await cat.del()
+        res.status(200).send(deletedCat)
+    } catch(err) {
+        res.status(500).send({error: "Cat is indestructible"})
+    }
 }
 
-module.exports = {index, random, create, update, del};
+module.exports = {index, random, specific, create, update, del};
